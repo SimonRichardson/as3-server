@@ -1,0 +1,5 @@
+h1. AS3-HTML
+
+AS3 Server api Library
+
+AS3-Server uses the "MIT":http://en.wikipedia.org/wiki/MIT_License license.
