@@ -1,12 +1,12 @@
 package org.osflash.net.httpserver
 {
-	import org.osflash.logger.logs.info;
 	import org.osflash.net.httprouter.HTTPRouter;
 	import org.osflash.net.httprouter.IHTTPRouter;
 	import org.osflash.net.httpserver.backend.IHTTPServerOutput;
 	import org.osflash.net.httpserver.backend.http.HTTPServerSocket;
 	import org.osflash.net.httpserver.errors.HTTPServerError;
 	import org.osflash.net.httpserver.parser.HTTPRequestLexer;
+	import org.osflash.net.httpserver.parser.HTTPRequestParser;
 
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
@@ -71,14 +71,9 @@ package org.osflash.net.httpserver
 			
 			socket.readBytes(byteArray);
 			
-			// TODO : implement a parser here to work out the request headers
 			const source : String = byteArray.toString();
 			const lexer : HTTPRequestLexer = new HTTPRequestLexer(source);
-
-			while(lexer.hasNext)
-			{
-				info(lexer.next);
-			}
+			const parser : HTTPRequestParser = new HTTPRequestParser(lexer);
 			
 			output.close();
 		}
