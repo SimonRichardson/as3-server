@@ -124,8 +124,15 @@ package org.osflash.net.httpserver.backend.http
 			_nativeConnectSignal.target = _serverSocket;
 			_nativeConnectSignal.addOnce(handleConnectSignal);
 			
-			_serverSocket.bind(port, address);
-			_serverSocket.listen();
+			try
+			{
+				_serverSocket.bind(port, address);
+				_serverSocket.listen();
+			}
+			catch(error : Error)
+			{
+				errorSignal.dispatch(this, error);
+			}
 		}
 		
 		/**
@@ -240,7 +247,10 @@ package org.osflash.net.httpserver.backend.http
 		/**
 		 * @inheritDoc
 		 */
-		public function get listening() : Boolean { return _serverSocket.listening; }
+		public function get listening() : Boolean 
+		{ 
+			return null == _serverSocket ? false : _serverSocket.listening;
+		}
 
 		/**
 		 * @inheritDoc

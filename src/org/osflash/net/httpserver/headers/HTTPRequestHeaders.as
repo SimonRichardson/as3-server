@@ -16,7 +16,7 @@ package org.osflash.net.httpserver.headers
 		{
 			_headers = new Vector.<HTTPRequestHeader>();
 		}
-		
+				
 		public function add(header : HTTPRequestHeader) : HTTPRequestHeader
 		{
 			if(null == header) throw new ArgumentError('Header can not be null');

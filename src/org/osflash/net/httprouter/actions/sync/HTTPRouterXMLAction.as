@@ -18,7 +18,6 @@ package org.osflash.net.httprouter.actions.sync
 			
 			_xml = xml;
 			
-			ioStream.position = 0;
 			ioStream.writeUTF(_xml.toXMLString());
 		}
 		

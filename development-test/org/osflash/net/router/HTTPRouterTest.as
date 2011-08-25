@@ -13,15 +13,13 @@ package org.osflash.net.router
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
 
-
-
 	[SWF(backgroundColor="#FFFFFF", frameRate="31", width="640", height="480")]
-	public class RouterTest extends Sprite
+	public class HTTPRouterTest extends Sprite
 	{
 
 		use namespace net_namespace;
 		
-		public function RouterTest()
+		public function HTTPRouterTest()
 		{
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
