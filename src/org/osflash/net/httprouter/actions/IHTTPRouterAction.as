@@ -1,7 +1,8 @@
 package org.osflash.net.httprouter.actions
 {
-	import org.osflash.net.httpserver.headers.HTTPRequestHeaders;
 	import org.osflash.net.httprouter.types.HTTPRouterActionType;
+	import org.osflash.net.httpserver.headers.HTTPRequestHeaders;
+	import org.osflash.stream.IStreamInput;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
@@ -10,8 +11,8 @@ package org.osflash.net.httprouter.actions
 		
 		function execute() : void;
 		
-		function get content() : String;
-		
+		function get stream() : IStreamInput;
+				
 		function get type() : HTTPRouterActionType;
 		
 		function get requestHeaders() : HTTPRequestHeaders;

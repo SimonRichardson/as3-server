@@ -31,12 +31,7 @@ package org.osflash.net.httprouter.actions.async
 		 * @private
 		 */
 		private var _fileCharset : String;
-		
-		/**
-		 * @private
-		 */
-		private var _content : String;
-		
+				
 		/**
 		 * @private
 		 */
@@ -49,6 +44,8 @@ package org.osflash.net.httprouter.actions.async
 		 
 		public function HTTPRouterFileAction(file : File, charset : String = null)
 		{
+			super();
+			
 			if(null == file) throw new ArgumentError('File can not be null');
 			
 			_file = file;
@@ -86,7 +83,9 @@ package org.osflash.net.httprouter.actions.async
 		 */
 		private function handleCompleteSignal(event : Event) : void
 		{
-			_content = _fileStream.readMultiByte(file.size, _fileCharset);
+			ioStream.position = 0;
+			ioStream.writeUTF(_fileStream.readMultiByte(file.size, _fileCharset));
+			
 			_fileStream.close();
 			
 			dispatchComplete();
@@ -99,12 +98,7 @@ package org.osflash.net.httprouter.actions.async
 		{
 			dispatchError(HTTPStatusCode.INTERNAL_SERVER_ERROR);
 		}
-		
-		/**
-		 * @inheritDoc
-		 */	
-		override public function get content() : String { return _content; }
-		
+				
 		public function get file() : File { return _file; }
 		public function set file(value : File) : void 
 		{ 

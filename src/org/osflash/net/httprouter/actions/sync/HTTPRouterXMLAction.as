@@ -14,12 +14,15 @@ package org.osflash.net.httprouter.actions.sync
 		
 		public function HTTPRouterXMLAction(xml : XML)
 		{
+			super();
+			
 			_xml = xml;
+			
+			ioStream.position = 0;
+			ioStream.writeUTF(_xml.toXMLString());
 		}
 		
 		public function get xml() : XML { return _xml; }
 		public function set xml(value : XML) : void { _xml = value; }
-		
-		override public function get content() : String { return _xml.toXMLString(); }
 	}
 }

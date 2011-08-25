@@ -1,7 +1,10 @@
 package org.osflash.net.httprouter.actions
 {
-	import org.osflash.net.httpserver.headers.HTTPRequestHeaders;
+	import org.osflash.stream.types.bytearray.StreamByteArray;
+	import org.osflash.stream.IStreamInput;
 	import org.osflash.net.httprouter.types.HTTPRouterActionType;
+	import org.osflash.net.httpserver.headers.HTTPRequestHeaders;
+	import org.osflash.stream.IStreamIO;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
@@ -13,9 +16,14 @@ package org.osflash.net.httprouter.actions
 		 */
 		private var _requestHeaders : HTTPRequestHeaders;
 		
+		/**
+		 * @private
+		 */
+		private var _stream : IStreamIO;
+		
 		public function HTTPRouterAction()
 		{
-			
+			_stream = new StreamByteArray();
 		}
 		
 		/**
@@ -29,7 +37,7 @@ package org.osflash.net.httprouter.actions
 		/**
 		 * @inheritDoc
 		 */
-		public function get content() : String { throw new Error('Abstract Error'); }
+		public final function get stream() : IStreamInput { return _stream; }
 
 		/**
 		 * @inheritDoc
@@ -44,5 +52,7 @@ package org.osflash.net.httprouter.actions
 		{ 
 			_requestHeaders = value; 
 		}
+		
+		protected function get ioStream() : IStreamIO { return _stream; }
 	}
 }

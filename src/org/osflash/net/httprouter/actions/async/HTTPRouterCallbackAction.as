@@ -29,10 +29,16 @@ package org.osflash.net.httprouter.actions.async
 			{
 				const result : String = handler();
 				
-				if(null == result) errorSignal.dispatch(HTTPStatusCode.INTERNAL_SERVER_ERROR);
-				else completeSignal.dispatch(result);
+				if(null == result) dispatchError(HTTPStatusCode.INTERNAL_SERVER_ERROR);
+				else 
+				{
+					ioStream.position = 0;
+					ioStream.writeUTF(result);
+					
+					dispatchComplete();
+				}
 			}
-			else errorSignal.dispatch(HTTPStatusCode.INTERNAL_SERVER_ERROR);
+			else dispatchError(HTTPStatusCode.INTERNAL_SERVER_ERROR);
 		}
 		
 		public function get handler() : Function { return _handler; }

@@ -23,6 +23,7 @@ package org.osflash.net.httpserver.backend.http
 		 * @private
 		 */
 		private var _port : int;
+		
 				
 		public function HTTPServerSocket(address : String = '0.0.0.0', port : int = 8888)
 		{
