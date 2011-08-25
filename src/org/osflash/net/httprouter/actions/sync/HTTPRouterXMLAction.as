@@ -1,5 +1,6 @@
-package org.osflash.net.httprouter.actions
+package org.osflash.net.httprouter.actions.sync
 {
+	import org.osflash.net.httprouter.actions.HTTPRouterAction;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */

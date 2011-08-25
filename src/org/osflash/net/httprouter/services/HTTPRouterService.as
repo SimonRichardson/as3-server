@@ -1,7 +1,9 @@
 package org.osflash.net.httprouter.services
 {
 	import org.osflash.net.httprouter.actions.IHTTPRouterAction;
+	import org.osflash.net.httprouter.errors.HTTPRouterError;
 	import org.osflash.net.httprouter.utils.getRegExpSource;
+	import org.osflash.net.httpserver.headers.HTTPRequestHeaders;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
@@ -33,11 +35,33 @@ package org.osflash.net.httprouter.services
 			_action = action;
 		}
 		
+		/**
+		 * @inheritDoc
+		 */
+		public function execute(headers : HTTPRequestHeaders) : void
+		{
+			if(null != action)
+			{
+				action.requestHeaders = headers;
+				action.execute();
+			}
+			else throw new HTTPRouterError('Action not found');
+		}
+			
+		/**
+		 * @inheritDoc
+		 */	
 		public function get action() : IHTTPRouterAction { return _action; }
 		public function set action(value : IHTTPRouterAction) : void { _action = value; }
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get pattern() : RegExp { return pattern; }
 
+		/**
+		 * @inheritDoc
+		 */
 		public function get normalizedPattern() : String { return _normalizedPattern; }
 	}
 }

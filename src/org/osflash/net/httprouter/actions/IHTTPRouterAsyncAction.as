@@ -7,8 +7,8 @@ package org.osflash.net.httprouter.actions
 	public interface IHTTPRouterAsyncAction extends IHTTPRouterAction
 	{
 		
-		function execute() : void;
+		function get completeSignal() : ISignal;
 		
-		function get resultSignal() : ISignal;
+		function get errorSignal() : ISignal;
 	}
 }

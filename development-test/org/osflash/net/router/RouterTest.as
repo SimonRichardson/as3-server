@@ -2,16 +2,17 @@ package org.osflash.net.router
 {
 	import org.osflash.logger.logs.info;
 	import org.osflash.net.httprouter.HTTPRouter;
-	import org.osflash.net.httprouter.actions.HTTPRouterCallbackAction;
-	import org.osflash.net.httprouter.actions.HTTPRouterXMLAction;
 	import org.osflash.net.httprouter.actions.IHTTPRouterAction;
 	import org.osflash.net.httprouter.actions.IHTTPRouterAsyncAction;
+	import org.osflash.net.httprouter.actions.async.HTTPRouterCallbackAction;
+	import org.osflash.net.httprouter.actions.sync.HTTPRouterXMLAction;
 	import org.osflash.net.httprouter.services.HTTPRouterService;
 	import org.osflash.net.net_namespace;
 
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
 	import flash.display.StageScaleMode;
+
 
 
 	[SWF(backgroundColor="#FFFFFF", frameRate="31", width="640", height="480")]
@@ -31,7 +32,7 @@ package org.osflash.net.router
 			router.add(new HTTPRouterService(/\/home/, action0));
 			
 			const action1 : IHTTPRouterAsyncAction = new HTTPRouterCallbackAction(handlerCallback);
-			action1.resultSignal.add(handleResultSignal);
+			action1.completeSignal.add(handleResultSignal);
 			router.add(new HTTPRouterService(/\/callback/, action1));
 			
 			info(router.contains(/\/home/));
@@ -42,7 +43,8 @@ package org.osflash.net.router
 			
 			info(router.length);
 			
-			IHTTPRouterAsyncAction(router.getAt(0).action).execute();
+			const async : IHTTPRouterAction = IHTTPRouterAction(router.getAt(0).action);
+			async.execute();
 		}
 		
 		private final function handlerCallback() : String
