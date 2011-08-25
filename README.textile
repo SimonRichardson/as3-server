@@ -1,4 +1,4 @@
-h1. AS3-HTML
+h1. AS3-Server
 
 AS3 Server api Library
 
