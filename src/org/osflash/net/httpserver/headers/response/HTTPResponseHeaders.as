@@ -1,4 +1,4 @@
-package org.osflash.net.httpserver.headers
+package org.osflash.net.httpserver.headers.response
 {
 	import org.osflash.net.httpserver.errors.HTTPServerError;
 	/**

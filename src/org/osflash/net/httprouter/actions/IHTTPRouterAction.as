@@ -1,7 +1,7 @@
 package org.osflash.net.httprouter.actions
 {
 	import org.osflash.net.httprouter.types.HTTPRouterActionType;
-	import org.osflash.net.httpserver.headers.HTTPRequestHeaders;
+	import org.osflash.net.httpserver.headers.request.HTTPRequestHeaders;
 	import org.osflash.stream.IStreamInput;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk

@@ -1,10 +1,10 @@
 package org.osflash.net.httprouter.actions
 {
-	import org.osflash.stream.types.bytearray.StreamByteArray;
-	import org.osflash.stream.IStreamInput;
 	import org.osflash.net.httprouter.types.HTTPRouterActionType;
-	import org.osflash.net.httpserver.headers.HTTPRequestHeaders;
+	import org.osflash.net.httpserver.headers.request.HTTPRequestHeaders;
 	import org.osflash.stream.IStreamIO;
+	import org.osflash.stream.IStreamInput;
+	import org.osflash.stream.types.bytearray.StreamByteArray;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */

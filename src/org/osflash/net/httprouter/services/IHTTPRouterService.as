@@ -1,7 +1,7 @@
 package org.osflash.net.httprouter.services
 {
-	import org.osflash.net.httpserver.headers.HTTPRequestHeaders;
 	import org.osflash.net.httprouter.actions.IHTTPRouterAction;
+	import org.osflash.net.httpserver.headers.request.HTTPRequestHeaders;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */

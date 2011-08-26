@@ -1,9 +1,9 @@
-package org.osflash.net.httpserver.headers
+package org.osflash.net.httpserver.headers.request
 {
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public class HTTPRequestHeader
+	public class HTTPRequestHeader implements IHTTPRequestHeader
 	{
 
 		/**

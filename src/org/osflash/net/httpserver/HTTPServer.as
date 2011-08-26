@@ -5,8 +5,6 @@ package org.osflash.net.httpserver
 	import org.osflash.net.httpserver.backend.IHTTPServerOutput;
 	import org.osflash.net.httpserver.backend.http.HTTPServerSocket;
 	import org.osflash.net.httpserver.errors.HTTPServerError;
-	import org.osflash.net.httpserver.parser.HTTPRequestLexer;
-	import org.osflash.net.httpserver.parser.HTTPRequestParser;
 
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
@@ -72,8 +70,6 @@ package org.osflash.net.httpserver
 			socket.readBytes(byteArray);
 			
 			const source : String = byteArray.toString();
-			const lexer : HTTPRequestLexer = new HTTPRequestLexer(source);
-			const parser : HTTPRequestParser = new HTTPRequestParser(lexer);
 			
 			output.close();
 		}
