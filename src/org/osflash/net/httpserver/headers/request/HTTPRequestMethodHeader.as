@@ -1,5 +1,6 @@
 package org.osflash.net.httpserver.headers.request
 {
+	import org.osflash.net.httpserver.types.HTTPRequestHeaderType;
 	import org.osflash.net.httpserver.types.HTTPRequestMethodType;
 	import org.osflash.net.httpserver.types.HTTPRequestProtocolType;
 	/**
@@ -43,5 +44,7 @@ package org.osflash.net.httpserver.headers.request
 		public function get url() : String { return _url; }
 		
 		public function get protocol() : HTTPRequestProtocolType { return _protocol; }
+		
+		public function get type() : HTTPRequestHeaderType { return HTTPRequestHeaderType.METHOD; }
 	}
 }

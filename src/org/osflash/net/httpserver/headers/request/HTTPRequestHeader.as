@@ -1,5 +1,6 @@
 package org.osflash.net.httpserver.headers.request
 {
+	import org.osflash.net.httpserver.types.HTTPRequestHeaderType;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
@@ -28,5 +29,10 @@ package org.osflash.net.httpserver.headers.request
 		public function get name() : String { return _name; }
 		
 		public function get value() : String { return _value; }
+		
+		public function get type() : HTTPRequestHeaderType 
+		{ 
+			return HTTPRequestHeaderType.VARIABLES; 
+		}
 	}
 }

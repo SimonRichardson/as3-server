@@ -1,10 +1,13 @@
 package org.osflash.net.httpserver
 {
+	import org.osflash.logger.logs.warn;
 	import org.osflash.net.httprouter.HTTPRouter;
 	import org.osflash.net.httprouter.IHTTPRouter;
 	import org.osflash.net.httpserver.backend.IHTTPServerOutput;
 	import org.osflash.net.httpserver.backend.http.HTTPServerSocket;
 	import org.osflash.net.httpserver.errors.HTTPServerError;
+	import org.osflash.net.httpserver.headers.request.HTTPRequestHeaders;
+	import org.osflash.net.httpserver.headers.request.HTTPRequestHeadersParser;
 
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
@@ -69,7 +72,13 @@ package org.osflash.net.httpserver
 			
 			socket.readBytes(byteArray);
 			
-			const source : String = byteArray.toString();
+			const parser : HTTPRequestHeadersParser = new HTTPRequestHeadersParser(byteArray);
+			const headers : HTTPRequestHeaders = parser.parse();
+			
+			for(var i : int = 0; i<headers.length; i++)
+			{
+				warn(headers.getAt(i).name);
+			}
 			
 			output.close();
 		}

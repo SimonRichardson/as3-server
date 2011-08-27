@@ -1,5 +1,6 @@
 package org.osflash.net.httpserver.headers.request
 {
+	import org.osflash.net.httpserver.types.HTTPRequestHeaderType;
 	import org.osflash.net.httpserver.errors.HTTPServerError;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
@@ -41,6 +42,17 @@ package org.osflash.net.httpserver.headers.request
 			{
 				const header : IHTTPRequestHeader = _headers[index]; 
 				if(header.name == name) return header;
+			}
+			return null;
+		}
+		
+		public function getByType(type : HTTPRequestHeaderType) : IHTTPRequestHeader
+		{
+			var index : int = length;
+			while(--index > -1)
+			{
+				const header : IHTTPRequestHeader = _headers[index]; 
+				if(header.type == type) return header;
 			}
 			return null;
 		}
