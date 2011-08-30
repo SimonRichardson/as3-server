@@ -1,6 +1,8 @@
 package org.osflash.net.httpserver.backend
 {
 	import org.osflash.signals.ISignal;
+
+	import flash.net.Socket;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
@@ -14,6 +16,8 @@ package org.osflash.net.httpserver.backend
 		function get address() : String;
 		
 		function get port() : int;
+		
+		function get socket() : Socket;
 		
 		function get listening() : Boolean;
 		

@@ -247,6 +247,11 @@ package org.osflash.net.httpserver.backend.http
 		/**
 		 * @inheritDoc
 		 */
+		public function get socket() : Socket { return _socket; }
+		
+		/**
+		 * @inheritDoc
+		 */
 		public function get listening() : Boolean 
 		{ 
 			return null == _serverSocket ? false : _serverSocket.listening;
