@@ -1,14 +1,17 @@
 package org.osflash.net.httpserver
 {
-	import org.osflash.net.httpserver.headers.request.HTTPRequestMethodHeader;
+	import org.osflash.net.http.HTTPStatusCode;
 	import org.osflash.net.httprouter.HTTPRouter;
 	import org.osflash.net.httprouter.IHTTPRouter;
+	import org.osflash.net.httprouter.actions.IHTTPRouterAsyncAction;
 	import org.osflash.net.httprouter.services.IHTTPRouterService;
+	import org.osflash.net.httprouter.types.HTTPRouterActionType;
 	import org.osflash.net.httpserver.backend.IHTTPServerOutput;
 	import org.osflash.net.httpserver.backend.http.HTTPServerSocket;
 	import org.osflash.net.httpserver.errors.HTTPServerError;
 	import org.osflash.net.httpserver.headers.request.HTTPRequestHeaders;
 	import org.osflash.net.httpserver.headers.request.HTTPRequestHeadersParser;
+	import org.osflash.net.httpserver.headers.request.HTTPRequestMethodHeader;
 	import org.osflash.net.httpserver.headers.request.IHTTPRequestHeader;
 	import org.osflash.net.httpserver.types.HTTPRequestHeaderType;
 	import org.osflash.net.httpserver.types.HTTPRequestMethodType;
@@ -82,6 +85,8 @@ package org.osflash.net.httpserver
 			const methodType : HTTPRequestHeaderType = HTTPRequestHeaderType.METHOD;
 			const method : IHTTPRequestHeader = headers.getByType(methodType);
 			
+			var sync : Boolean = true;
+			
 			if(null != method)
 			{
 				// -- get request
@@ -92,8 +97,21 @@ package org.osflash.net.httpserver
 					if(router.contains(pattern))
 					{
 						 const service : IHTTPRouterService = router.getByPattern(pattern);
-						 // TODO : listen to the action items
-						 service.execute(headers);
+						 const actionType : HTTPRouterActionType = service.actionType;
+						 if(actionType == HTTPRouterActionType.SYNC)
+						 {
+						 	service.execute(headers);
+							
+							socket.writeUTF(service.content);
+						 }
+						 else if(actionType == HTTPRouterActionType.ASYNC)
+						 {
+							sync = false;
+							
+							service.actionCompleteSignal.addOnce(handleActionCompleteSignal);
+							service.execute(headers);						
+						 }
+						 else throw new HTTPServerError('Invalid serivce type');
 					}
 					else
 					{
@@ -110,9 +128,12 @@ package org.osflash.net.httpserver
 				// socket.writeUTF(value);
 			}
 			
-			socket.flush();
+			if(sync)
+			{
+				socket.flush();
 			
-			output.close();
+				output.close();
+			}
 		}
 		
 		/**
@@ -122,9 +143,39 @@ package org.osflash.net.httpserver
 		{
 			if(null != output.socket)
 			{
-				// TODO : work out what type of error it is and serve a reasonable error page.
+				// TODO : work out what type of error it is and server a reasonable error page.
 			}
 			else throw error;
+		}
+		
+		/**
+		 * @private 
+		 */
+		private function handleActionCompleteSignal(	action : IHTTPRouterAsyncAction, 
+														status : int,
+														output : IHTTPServerOutput,
+														socket : Socket,
+														service : IHTTPRouterService
+														) : void
+		{
+			if(null == socket || null == output) throw new HTTPServerError('Internal server error');
+			else
+			{
+				if(status != HTTPStatusCode.OK) 
+				{
+					// TODO : show a status error
+					// socket.writeUTF(value);
+				}
+				else
+				{
+					socket.writeUTF(service.content);
+					socket.flush();
+					
+					output.close();
+				}
+			}
+			
+			action;
 		}
 		
 		public function get port() : int { return _output.port; }
