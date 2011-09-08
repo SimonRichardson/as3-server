@@ -15,6 +15,7 @@ package org.osflash.net.httpserver
 	import org.osflash.net.httpserver.headers.request.IHTTPRequestHeader;
 	import org.osflash.net.httpserver.types.HTTPRequestHeaderType;
 	import org.osflash.net.httpserver.types.HTTPRequestMethodType;
+	import org.osflash.net.httpserver.utils.fileExists;
 
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
@@ -113,9 +114,10 @@ package org.osflash.net.httpserver
 						 }
 						 else throw new HTTPServerError('Invalid serivce type');
 					}
-					else
+					else if(fileExists(methodGet.url))
 					{
 						// TODO : see if the content is the form of a static content i.e. a File.
+						
 					}
 					// TODO : show a 404 error
 					// else throw new Error('No valid content found');
