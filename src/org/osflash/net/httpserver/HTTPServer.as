@@ -16,7 +16,9 @@ package org.osflash.net.httpserver
 	import org.osflash.net.httpserver.types.HTTPRequestHeaderType;
 	import org.osflash.net.httpserver.types.HTTPRequestMethodType;
 	import org.osflash.net.httpserver.utils.fileExists;
+	import org.osflash.net.httpserver.utils.getFileFromPath;
 
+	import flash.filesystem.File;
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
 	/**
@@ -117,6 +119,7 @@ package org.osflash.net.httpserver
 					else if(fileExists(methodGet.url))
 					{
 						// TODO : see if the content is the form of a static content i.e. a File.
+						const file : File = getFileFromPath(methodGet.url);
 						
 					}
 					// TODO : show a 404 error
