@@ -4,7 +4,7 @@ package org.osflash.net.httpserver.utils
 	/**
 	 * @author Simon Richardson - me@simonrichardson.info
 	 */
-	public function getFileFromPath(url : String, folder : String = '') : File
+	public function getFileFromURL(url : String, folder : String = '') : File
 	{
 		if(null == url) throw new ArgumentError('URL can not be null');
 		

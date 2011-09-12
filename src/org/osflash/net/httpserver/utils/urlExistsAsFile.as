@@ -4,7 +4,7 @@ package org.osflash.net.httpserver.utils
 	/**
 	 * @author Simon Richardson - me@simonrichardson.info
 	 */
-	public function fileExists(url : String, folder : String = '') : Boolean
+	public function urlExistsAsFile(url : String, folder : String = '') : Boolean
 	{
 		if(null == url) throw new ArgumentError('URL can not be null');
 		

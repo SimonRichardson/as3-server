@@ -1,5 +1,7 @@
 package org.osflash.net.httpserver
 {
+	import flash.filesystem.FileMode;
+	import flash.filesystem.FileStream;
 	import org.osflash.net.http.HTTPStatusCode;
 	import org.osflash.net.httprouter.HTTPRouter;
 	import org.osflash.net.httprouter.IHTTPRouter;
@@ -15,8 +17,8 @@ package org.osflash.net.httpserver
 	import org.osflash.net.httpserver.headers.request.IHTTPRequestHeader;
 	import org.osflash.net.httpserver.types.HTTPRequestHeaderType;
 	import org.osflash.net.httpserver.types.HTTPRequestMethodType;
-	import org.osflash.net.httpserver.utils.fileExists;
-	import org.osflash.net.httpserver.utils.getFileFromPath;
+	import org.osflash.net.httpserver.utils.urlExistsAsFile;
+	import org.osflash.net.httpserver.utils.getFileFromURL;
 
 	import flash.filesystem.File;
 	import flash.net.Socket;
@@ -116,11 +118,12 @@ package org.osflash.net.httpserver
 						 }
 						 else throw new HTTPServerError('Invalid serivce type');
 					}
-					else if(fileExists(methodGet.url))
+					else if(urlExistsAsFile(methodGet.url))
 					{
 						// TODO : see if the content is the form of a static content i.e. a File.
-						const file : File = getFileFromPath(methodGet.url);
-						
+						const file : File = getFileFromURL(methodGet.url);
+						const fileStream : FileStream = new FileStream();
+						fileStream.openAsync(file, FileMode.READ);
 					}
 					// TODO : show a 404 error
 					// else throw new Error('No valid content found');
