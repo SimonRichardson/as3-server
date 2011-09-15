@@ -1,5 +1,6 @@
 package org.osflash.net.server
 {
+	import org.osflash.logger.logs.info;
 	import org.osflash.net.httprouter.IHTTPRouter;
 	import org.osflash.net.httprouter.actions.IHTTPRouterAction;
 	import org.osflash.net.httprouter.actions.sync.HTTPRouterXMLAction;
@@ -11,7 +12,6 @@ package org.osflash.net.server
 	import flash.display.StageScaleMode;
 	import flash.html.HTMLLoader;
 	import flash.net.URLRequest;
-
 	
 	[SWF(backgroundColor="#FFFFFF", frameRate="31", width="640", height="480")]
 	public class HTTPServerTest extends Sprite
@@ -19,6 +19,8 @@ package org.osflash.net.server
 
 		public function HTTPServerTest()
 		{
+			info('Start');
+			
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
 			
