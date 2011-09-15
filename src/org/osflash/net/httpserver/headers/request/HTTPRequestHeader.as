@@ -1,9 +1,10 @@
-package org.osflash.net.httpserver.headers
+package org.osflash.net.httpserver.headers.request
 {
+	import org.osflash.net.httpserver.types.HTTPRequestHeaderType;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
 	 */
-	public class HTTPRequestHeader
+	public class HTTPRequestHeader implements IHTTPRequestHeader
 	{
 
 		/**
@@ -28,5 +29,10 @@ package org.osflash.net.httpserver.headers
 		public function get name() : String { return _name; }
 		
 		public function get value() : String { return _value; }
+		
+		public function get type() : HTTPRequestHeaderType 
+		{ 
+			return HTTPRequestHeaderType.VARIABLES; 
+		}
 	}
 }

@@ -1,12 +1,17 @@
 package org.osflash.net.httpserver
 {
+	import org.osflash.net.httpserver.headers.request.HTTPRequestMethodHeader;
 	import org.osflash.net.httprouter.HTTPRouter;
 	import org.osflash.net.httprouter.IHTTPRouter;
+	import org.osflash.net.httprouter.services.IHTTPRouterService;
 	import org.osflash.net.httpserver.backend.IHTTPServerOutput;
 	import org.osflash.net.httpserver.backend.http.HTTPServerSocket;
 	import org.osflash.net.httpserver.errors.HTTPServerError;
-	import org.osflash.net.httpserver.parser.HTTPRequestLexer;
-	import org.osflash.net.httpserver.parser.HTTPRequestParser;
+	import org.osflash.net.httpserver.headers.request.HTTPRequestHeaders;
+	import org.osflash.net.httpserver.headers.request.HTTPRequestHeadersParser;
+	import org.osflash.net.httpserver.headers.request.IHTTPRequestHeader;
+	import org.osflash.net.httpserver.types.HTTPRequestHeaderType;
+	import org.osflash.net.httpserver.types.HTTPRequestMethodType;
 
 	import flash.net.Socket;
 	import flash.utils.ByteArray;
@@ -71,9 +76,41 @@ package org.osflash.net.httpserver
 			
 			socket.readBytes(byteArray);
 			
-			const source : String = byteArray.toString();
-			const lexer : HTTPRequestLexer = new HTTPRequestLexer(source);
-			const parser : HTTPRequestParser = new HTTPRequestParser(lexer);
+			const parser : HTTPRequestHeadersParser = new HTTPRequestHeadersParser(byteArray);
+			const headers : HTTPRequestHeaders = parser.parse();
+			
+			const methodType : HTTPRequestHeaderType = HTTPRequestHeaderType.METHOD;
+			const method : IHTTPRequestHeader = headers.getByType(methodType);
+			
+			if(null != method)
+			{
+				// -- get request
+				if(method.type == HTTPRequestMethodType.GET)
+				{
+					const methodGet : HTTPRequestMethodHeader = HTTPRequestMethodHeader(method);
+					const pattern : RegExp = new RegExp(methodGet.url);
+					if(router.contains(pattern))
+					{
+						 const service : IHTTPRouterService = router.getByPattern(pattern);
+						 // TODO : listen to the action items
+						 service.execute(headers);
+					}
+					else
+					{
+						// TODO : see if the content is the form of a static content i.e. a File.
+					}
+					// TODO : show a 404 error
+					// else throw new Error('No valid content found');
+				}
+				else throw new Error('Method not supported');
+			}
+			else 
+			{
+				// TODO : show a 500 error
+				// socket.writeUTF(value);
+			}
+			
+			socket.flush();
 			
 			output.close();
 		}
@@ -83,7 +120,11 @@ package org.osflash.net.httpserver
 		 */
 		private function handleErrorSignal(output : IHTTPServerOutput, error : Error) : void
 		{
-			
+			if(null != output.socket)
+			{
+				// TODO : work out what type of error it is and serve a reasonable error page.
+			}
+			else throw error;
 		}
 		
 		public function get port() : int { return _output.port; }

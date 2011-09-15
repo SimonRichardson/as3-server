@@ -1,5 +1,6 @@
-package org.osflash.net.httpserver.headers
+package org.osflash.net.httpserver.headers.request
 {
+	import org.osflash.net.httpserver.types.HTTPRequestHeaderType;
 	import org.osflash.net.httpserver.errors.HTTPServerError;
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk
@@ -10,14 +11,14 @@ package org.osflash.net.httpserver.headers
 		/**
 		 * @private
 		 */
-		private var _headers : Vector.<HTTPRequestHeader>;
+		private var _headers : Vector.<IHTTPRequestHeader>;
 		
 		public function HTTPRequestHeaders()
 		{
-			_headers = new Vector.<HTTPRequestHeader>();
+			_headers = new Vector.<IHTTPRequestHeader>();
 		}
 				
-		public function add(header : HTTPRequestHeader) : HTTPRequestHeader
+		public function add(header : IHTTPRequestHeader) : IHTTPRequestHeader
 		{
 			if(null == header) throw new ArgumentError('Header can not be null');
 			
@@ -27,20 +28,31 @@ package org.osflash.net.httpserver.headers
 			return header;
 		}
 		
-		public function getAt(index : int) : HTTPRequestHeader
+		public function getAt(index : int) : IHTTPRequestHeader
 		{
 			if(index < 0 || index >= length) throw new RangeError();
 			
 			return _headers[index];		
 		}
 		
-		public function getByName(name : String) : HTTPRequestHeader
+		public function getByName(name : String) : IHTTPRequestHeader
 		{
 			var index : int = length;
 			while(--index > -1)
 			{
-				const header : HTTPRequestHeader = _headers[index]; 
+				const header : IHTTPRequestHeader = _headers[index]; 
 				if(header.name == name) return header;
+			}
+			return null;
+		}
+		
+		public function getByType(type : HTTPRequestHeaderType) : IHTTPRequestHeader
+		{
+			var index : int = length;
+			while(--index > -1)
+			{
+				const header : IHTTPRequestHeader = _headers[index]; 
+				if(header.type == type) return header;
 			}
 			return null;
 		}
@@ -50,7 +62,7 @@ package org.osflash.net.httpserver.headers
 			var index : int = length;
 			while(--index > -1)
 			{
-				const header : HTTPRequestHeader = _headers[index]; 
+				const header : IHTTPRequestHeader = _headers[index]; 
 				if(header.name == name) return index;
 			}
 			return -1;
@@ -61,7 +73,7 @@ package org.osflash.net.httpserver.headers
 			var index : int = length;
 			while(--index > -1)
 			{
-				const header : HTTPRequestHeader = _headers[index]; 
+				const header : IHTTPRequestHeader = _headers[index]; 
 				if(header.name == name) return true;
 			}
 			return false;

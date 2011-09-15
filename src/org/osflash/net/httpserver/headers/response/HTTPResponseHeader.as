@@ -1,4 +1,4 @@
-package org.osflash.net.httpserver.headers
+package org.osflash.net.httpserver.headers.response
 {
 	/**
 	 * @author Simon Richardson - simon@ustwo.co.uk

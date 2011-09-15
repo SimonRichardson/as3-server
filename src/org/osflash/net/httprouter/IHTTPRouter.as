@@ -17,6 +17,8 @@ package org.osflash.net.httprouter
 		
 		function getAt(index : int) : IHTTPRouterService;
 		
+		function getByPattern(pattern : RegExp) : IHTTPRouterService;
+		
 		function get length() : int;
 	}
 }

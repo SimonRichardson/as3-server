@@ -72,6 +72,23 @@ package org.osflash.net.httprouter
 			
 			return _services[index];
 		}
+		
+		/**
+		 * @inheritDoc
+		 */
+		public function getByPattern(pattern : RegExp) : IHTTPRouterService
+		{
+			const source : String = getRegExpSource(pattern);
+			
+			const total : int = length;
+			for(var i : int = 0; i < total; i++)
+			{
+				const service : IHTTPRouterService = _services[i];
+				if(service.normalizedPattern == source) return service;
+			}
+			
+			return null;
+		}
 
 		/**
 		 * @inheritDoc
